@@ -1,13 +1,19 @@
 package com.example.mall.model;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class Product {
     private Integer productId;
+    @NotNull
     private String productName;
+    @NotNull
     private String category;
+    @NotNull
     private String imageUrl;
+    @NotNull
     private Integer price;
+    @NotNull
     private Integer stock;
     private String description;
     private Date createdDate;
