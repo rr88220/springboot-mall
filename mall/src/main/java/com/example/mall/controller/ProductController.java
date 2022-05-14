@@ -1,5 +1,6 @@
 package com.example.mall.controller;
 
+import com.example.mall.dto.ProductRequest;
 import com.example.mall.model.Product;
 import com.example.mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,16 +26,17 @@ public class ProductController {
         }
     }
     @PostMapping("products")
-    public ResponseEntity<Product> insertProduct(@RequestBody @Valid Product product){
-        Product insertProduct = productService.insertProduct(product);
-        return ResponseEntity.status(HttpStatus.CREATED).body(insertProduct);
+    public ResponseEntity<Product> insertProduct(@RequestBody @Valid ProductRequest productRequest){
+        Integer id = productService.insertProduct(productRequest);
+        Product product = productService.getById(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
     @PutMapping("/products/{productId}")
     public ResponseEntity updateProduct(@PathVariable Integer productId,
-                                        @RequestBody @Valid Product product){
+                                        @RequestBody @Valid ProductRequest productRequest){
         Product product1 = productService.getById(productId);
         if(product1 != null){
-            productService.updateProduct(productId,product);
+            productService.updateProduct(productId,productRequest);
             return ResponseEntity.status(HttpStatus.ACCEPTED).build();
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

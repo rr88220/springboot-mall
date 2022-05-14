@@ -1,5 +1,6 @@
 package com.example.mall.dao.impl;
 
+import com.example.mall.dto.ProductRequest;
 import com.example.mall.model.Product;
 import com.example.mall.dao.ProductDao;
 import com.example.mall.rowmapper.ProductRowMapper;
@@ -38,16 +39,16 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Product insertProduct(Product product) {
+    public Integer insertProduct(ProductRequest productRequest) {
         String sql = "INSERT INTO product(productname,category,image_url,price,stock,description,created_date,last_modified_date) VALUES (:productName,:category,:image_url,:price,:stock,:description,:created_date,:last_modified_date)";
 
         Map<String,Object> map = new HashMap<>();
-        map.put("productName",product.getProductName());
-        map.put("category",product.getCategory());
-        map.put("image_url",product.getImageUrl());
-        map.put("price",product.getPrice());
-        map.put("stock",product.getStock());
-        map.put("description",product.getDescription());
+        map.put("productName",productRequest.getProductName());
+        map.put("category",productRequest.getCategory().name());
+        map.put("image_url",productRequest.getImageUrl());
+        map.put("price",productRequest.getPrice());
+        map.put("stock",productRequest.getStock());
+        map.put("description",productRequest.getDescription());
 
         Date now = new Date();
         map.put("created_date",now);
@@ -56,33 +57,21 @@ public class ProductDaoImpl implements ProductDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         namedParameterJdbcTemplate.update(sql,new MapSqlParameterSource(map),keyHolder);
-
         int id = keyHolder.getKey().intValue();
-
-        String sql2 = "SELECT productid,productname,category,image_url,price,stock,description,created_date,last_modified_date FROM product WHERE productid = :id";
-
-        Map<String,Object> map2 = new HashMap<>();
-        map2.put("id",id);
-
-        List<Product> productList = namedParameterJdbcTemplate.query(sql2, map2, new ProductRowMapper());
-        if(productList.size()>0){
-            return productList.get(0);
-        }else {
-            return null;
-        }
+        return id;
     }
     @Override
-    public void updateProduct(Integer productId, Product product) {
+    public void updateProduct(Integer productId, ProductRequest productRequest) {
         String sql = "UPDATE product SET productname=:productName,category=:category,image_url=:image_url,price=:price,stock=:stock,description=:description,last_modified_date=:last_modified_date WHERE productid = :id";
 
         Map<String,Object> map = new HashMap<>();
         map.put("id",productId);
-        map.put("productName",product.getProductName());
-        map.put("category",product.getCategory());
-        map.put("image_url",product.getImageUrl());
-        map.put("price",product.getPrice());
-        map.put("stock",product.getStock());
-        map.put("description",product.getDescription());
+        map.put("productName",productRequest.getProductName());
+        map.put("category",productRequest.getCategory().name());
+        map.put("image_url",productRequest.getImageUrl());
+        map.put("price",productRequest.getPrice());
+        map.put("stock",productRequest.getStock());
+        map.put("description",productRequest.getDescription());
         map.put("last_modified_date",new Date());
 
         namedParameterJdbcTemplate.update(sql,map);

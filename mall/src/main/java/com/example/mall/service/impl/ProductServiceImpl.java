@@ -1,6 +1,7 @@
 package com.example.mall.service.impl;
 
 import com.example.mall.dao.ProductDao;
+import com.example.mall.dto.ProductRequest;
 import com.example.mall.model.Product;
 import com.example.mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product insertProduct(Product product) {
-        return productDao.insertProduct(product);
+    public Integer insertProduct(ProductRequest productRequest) {
+        return productDao.insertProduct(productRequest);
     }
 
     @Override
-    public void updateProduct(Integer productId, Product product) {
-        productDao.updateProduct(productId,product);
+    public void updateProduct(Integer productId, ProductRequest productRequest) {
+        productDao.updateProduct(productId,productRequest);
     }
 
     @Override
