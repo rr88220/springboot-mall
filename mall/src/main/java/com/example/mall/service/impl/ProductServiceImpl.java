@@ -1,11 +1,14 @@
 package com.example.mall.service.impl;
 
 import com.example.mall.dao.ProductDao;
+import com.example.mall.dto.ProductQueryParams;
 import com.example.mall.dto.ProductRequest;
 import com.example.mall.model.Product;
 import com.example.mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class ProductServiceImpl implements ProductService {
@@ -16,6 +19,9 @@ public class ProductServiceImpl implements ProductService {
     public Product getById(Integer productId) {
         return productDao.getById(productId);
     }
+
+    @Override
+    public List<Product> getProducts(ProductQueryParams productQueryParams){ return productDao.getProducts(productQueryParams); };
 
     @Override
     public Integer insertProduct(ProductRequest productRequest) {

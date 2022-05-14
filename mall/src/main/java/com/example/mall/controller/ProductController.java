@@ -1,14 +1,18 @@
 package com.example.mall.controller;
 
+import com.example.mall.constant.ProductCategory;
+import com.example.mall.dto.ProductQueryParams;
 import com.example.mall.dto.ProductRequest;
 import com.example.mall.model.Product;
 import com.example.mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 public class ProductController {
@@ -24,6 +28,18 @@ public class ProductController {
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+    @Validated
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getProducts(
+            @RequestParam(required = false) ProductCategory category,
+            @RequestParam(required = false) String search){
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+
+        List<Product> productList= productService.getProducts(productQueryParams);
+        return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
     @PostMapping("products")
     public ResponseEntity<Product> insertProduct(@RequestBody @Valid ProductRequest productRequest){
