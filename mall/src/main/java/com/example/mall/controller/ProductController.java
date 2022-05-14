@@ -35,12 +35,16 @@ public class ProductController {
             @RequestParam(required = false) ProductCategory category,
             @RequestParam(required = false) String search,
             @RequestParam(defaultValue = "created_date") String orderby,
-            @RequestParam(defaultValue = "DESC") String sort){
+            @RequestParam(defaultValue = "DESC") String sort,
+            @RequestParam(defaultValue = "5") Integer limit,
+            @RequestParam(defaultValue = "0") Integer offset){
         ProductQueryParams productQueryParams = new ProductQueryParams();
         productQueryParams.setCategory(category);
         productQueryParams.setSearch(search);
         productQueryParams.setOrderBy(orderby);
         productQueryParams.setSort(sort);
+        productQueryParams.setLimit(limit);
+        productQueryParams.setOffset(offset);
 
         List<Product> productList= productService.getProducts(productQueryParams);
         return ResponseEntity.status(HttpStatus.OK).body(productList);
