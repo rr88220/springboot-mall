@@ -6,4 +6,5 @@ public interface ProductDao {
     public Product getById(Integer productId);
     public Product insertProduct(Product product);
     public void updateProduct(Integer productId,Product product);
+    public void deleteProduct(Integer productId);
 }
