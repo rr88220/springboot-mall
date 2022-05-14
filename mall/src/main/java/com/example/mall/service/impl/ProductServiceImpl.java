@@ -1,0 +1,18 @@
+package com.example.mall.service.impl;
+
+import com.example.mall.dao.ProductDao;
+import com.example.mall.model.Product;
+import com.example.mall.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ProductServiceImpl implements ProductService {
+    @Autowired
+    private ProductDao productDao;
+
+    @Override
+    public Product getById(Integer productId) {
+        return productDao.getById(productId);
+    }
+}
