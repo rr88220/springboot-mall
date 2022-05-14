@@ -27,6 +27,17 @@ public class ProductController {
     @PostMapping("products")
     public ResponseEntity<Product> insertProduct(@RequestBody @Valid Product product){
         Product insertProduct = productService.insertProduct(product);
-        return ResponseEntity.status(HttpStatus.OK).body(insertProduct);
+        return ResponseEntity.status(HttpStatus.CREATED).body(insertProduct);
+    }
+    @PutMapping("/products/{productId}")
+    public ResponseEntity updateProduct(@PathVariable Integer productId,
+                                        @RequestBody Product product){
+        Product product1 = productService.getById(productId);
+        if(product1 != null){
+            productService.updateProduct(productId,product);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).build();
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 }
