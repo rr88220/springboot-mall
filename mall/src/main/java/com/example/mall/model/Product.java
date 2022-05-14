@@ -1,5 +1,7 @@
 package com.example.mall.model;
 
+import com.example.mall.constant.ProductCategory;
+
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -8,7 +10,7 @@ public class Product {
     @NotNull
     private String productName;
     @NotNull
-    private String category;
+    private ProductCategory category;
     @NotNull
     private String imageUrl;
     @NotNull
@@ -35,11 +37,11 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getCategory() {
+    public ProductCategory getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ProductCategory category) {
         this.category = category;
     }
 
