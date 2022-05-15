@@ -23,7 +23,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("products/{productId}")
+    @GetMapping("/products/{productId}")
     public ResponseEntity<Product> getById(@PathVariable Integer productId){
         Product product = productService.getById(productId);
         if(product != null){
