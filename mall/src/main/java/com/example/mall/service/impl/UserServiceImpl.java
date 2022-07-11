@@ -1,6 +1,7 @@
 package com.example.mall.service.impl;
 
 import com.example.mall.dao.UserDao;
+import com.example.mall.dto.UserLoginRequest;
 import com.example.mall.dto.UserRegisterRequest;
 import com.example.mall.model.User;
 import com.example.mall.service.UserService;
@@ -34,5 +35,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Integer userId) {
         return userDao.getUserById(userId);
+    }
+
+    @Override
+    public User login(UserLoginRequest userLoginRequest) {
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
+        //email尚未註冊
+        if(user == null){
+            log.warn("該email {} 尚未註冊",userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        //檢查password
+        if(userLoginRequest.getPassword().equals(user.getPassword())){
+            return user;
+        }else{
+            log.warn("{}的密碼不正確",userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }
