@@ -1,8 +1,10 @@
 package com.example.mall.dto;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 public class UserRegisterRequest {
+    @Email
     @NotBlank
     private String email;
     @NotBlank
