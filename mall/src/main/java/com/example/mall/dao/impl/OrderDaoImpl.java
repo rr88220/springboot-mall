@@ -1,6 +1,7 @@
 package com.example.mall.dao.impl;
 
 import com.example.mall.dao.OrderDao;
+import com.example.mall.dto.OrderQueryParams;
 import com.example.mall.model.Order;
 import com.example.mall.model.OrderItem;
 import com.example.mall.rowmapper.OrderItemRowMapper;
@@ -12,6 +13,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.Max;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +51,29 @@ public class OrderDaoImpl implements OrderDao {
         List<OrderItem> orderItemList = namedParameterJdbcTemplate.query(sql, map, new OrderItemRowMapper());
 
         return orderItemList;
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        String sql = "SELECT order_id,user_id,total_amount,created_date,last_modified_date FROM `order` " +
+                "WHERE user_id = :userId ORDER BY last_modified_date LIMIT :limit OFFSET :offset";
+        Map<String,Object> map = new HashMap<>();
+        map.put("userId",orderQueryParams.getUserId());
+        map.put("limit",orderQueryParams.getLimit());
+        map.put("offset",orderQueryParams.getOffset());
+
+        List<Order> orderList = namedParameterJdbcTemplate.query(sql,map,new OrderRowMapper());
+
+        return orderList;
+    }
+
+    @Override
+    public Integer countOrders(OrderQueryParams orderQueryParams) {
+        String sql = "SELECT COUNT(*) FROM `order` WHERE user_id = :userId";
+        Map<String,Object> map = new HashMap<>();
+        map.put("userId",orderQueryParams.getUserId());
+
+        return namedParameterJdbcTemplate.queryForObject(sql,map,Integer.class);
     }
 
     @Override
