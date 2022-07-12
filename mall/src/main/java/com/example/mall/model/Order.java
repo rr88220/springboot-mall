@@ -1,16 +1,21 @@
 package com.example.mall.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.Date;
 
-public class User {
+public class Order {
+    private Integer orderId;
     private Integer userId;
-    private String email;
-    @JsonIgnore
-    private String password;
+    private Integer totalAmount;
     private Date createdDate;
     private Date lastModifiedDate;
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
 
     public Integer getUserId() {
         return userId;
@@ -20,20 +25,12 @@ public class User {
         this.userId = userId;
     }
 
-    public String getEmail() {
-        return email;
+    public Integer getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setTotalAmount(Integer totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public Date getCreatedDate() {
