@@ -72,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
             }
 
             //扣除商品庫存
-            orderDao.updateStock(product.getProductId(),product.getStock() - buyItem.getQuantity());
+            productDao.updateStock(product.getProductId(),product.getStock() - buyItem.getQuantity());
 
             //計算總金額
             totalAmount += product.getPrice()*buyItem.getQuantity();

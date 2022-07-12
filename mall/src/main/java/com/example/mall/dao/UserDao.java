@@ -5,9 +5,9 @@ import com.example.mall.model.User;
 
 public interface UserDao {
 
-    Integer createUser(UserRegisterRequest userRegisterRequest);
+    public Integer createUser(UserRegisterRequest userRegisterRequest);
 
-    User getUserById(Integer userId);
+    public User getUserById(Integer userId);
 
-    User getUserByEmail(String email);
+    public User getUserByEmail(String email);
 }

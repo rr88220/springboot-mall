@@ -5,7 +5,7 @@ import com.example.mall.model.Order;
 
 public interface OrderService {
 
-    Order getOrderById(Integer orderId);
+    public Order getOrderById(Integer orderId);
 
-    Integer createOrder(Integer userId, CreateOrderRequest createOrderRequest);
+    public Integer createOrder(Integer userId, CreateOrderRequest createOrderRequest);
 }
