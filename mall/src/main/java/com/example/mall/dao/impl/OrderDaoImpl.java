@@ -13,7 +13,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.Max;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +55,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public List<Order> getOrders(OrderQueryParams orderQueryParams) {
         String sql = "SELECT order_id,user_id,total_amount,created_date,last_modified_date FROM `order` " +
-                "WHERE user_id = :userId ORDER BY last_modified_date LIMIT :limit OFFSET :offset";
+                "WHERE user_id = :userId ORDER BY last_modified_date DESC LIMIT :limit OFFSET :offset";
         Map<String,Object> map = new HashMap<>();
         map.put("userId",orderQueryParams.getUserId());
         map.put("limit",orderQueryParams.getLimit());
